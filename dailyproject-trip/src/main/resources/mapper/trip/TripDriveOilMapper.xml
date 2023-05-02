@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dailyprojecttrip.mapper.TripDriveOilMapper">
+    
+    <resultMap type="TripDriveOil" id="TripDriveOilResult">
+        <result property="oilId"    column="oil_id"    />
+        <result property="oilTime"    column="oil_time"    />
+        <result property="amount"    column="amount"    />
+        <result property="oilLitre"    column="oil_litre"    />
+        <result property="oilPrice"    column="oil_price"    />
+        <result property="carType"    column="car_type"    />
+        <result property="beforeRemainingMileage"    column="before_remaining_mileage"    />
+        <result property="afterRemainingMileage"    column="after_remaining_mileage"    />
+        <result property="payType"    column="pay_type"    />
+        <result property="discountAmount"    column="discount_amount"    />
+        <result property="actualPayment"    column="actual_payment"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="dataScope"    column="data_scope"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTripDriveOilVo">
+        select oil_id, oil_time, amount, oil_litre, oil_price, car_type, before_remaining_mileage, after_remaining_mileage, pay_type,
+               discount_amount, actual_payment, del_flag, data_scope, create_by, create_time, update_by, update_time, remark from trip_drive_oil
+    </sql>
+
+    <select id="selectTripDriveOilList" parameterType="TripDriveOil" resultMap="TripDriveOilResult">
+        <include refid="selectTripDriveOilVo"/>
+        <where>  
+            <if test="oilTime != null "> and oil_time = #{oilTime}</if>
+            <if test="amount != null  and amount != ''"> and amount = #{amount}</if>
+            <if test="oilLitre != null  and oilLitre != ''"> and oil_litre = #{oilLitre}</if>
+            <if test="oilPrice != null  and oilPrice != ''"> and oil_price = #{oilPrice}</if>
+            <if test="carType != null  and carType != ''"> and car_type = #{carType}</if>
+            <if test="beforeRemainingMileage != null  and beforeRemainingMileage != ''"> and before_remaining_mileage = #{beforeRemainingMileage}</if>
+            <if test="afterRemainingMileage != null  and afterRemainingMileage != ''"> and after_remaining_mileage = #{afterRemainingMileage}</if>
+            <if test="payType != null  and payType != ''"> and pay_type = #{payType}</if>
+            <if test="discountAmount != null  and discountAmount != ''"> and discount_amount = #{discountAmount}</if>
+            <if test="actualPayment != null  and actualPayment != ''"> and actual_payment = #{actualPayment}</if>
+            <if test="dataScope != null  and dataScope != ''"> and data_scope = #{dataScope}</if>
+        </where>
+    </select>
+    
+    <select id="selectTripDriveOilByOilId" parameterType="Long" resultMap="TripDriveOilResult">
+        <include refid="selectTripDriveOilVo"/>
+        where oil_id = #{oilId}
+    </select>
+        
+    <insert id="insertTripDriveOil" parameterType="TripDriveOil" useGeneratedKeys="true" keyProperty="oilId">
+        insert into trip_drive_oil
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="oilTime != null">oil_time,</if>
+            <if test="amount != null and amount != ''">amount,</if>
+            <if test="oilLitre != null and oilLitre != ''">oil_litre,</if>
+            <if test="oilPrice != null and oilPrice != ''">oil_price,</if>
+            <if test="carType != null and carType != ''">car_type,</if>
+            <if test="beforeRemainingMileage != null and beforeRemainingMileage != ''">before_remaining_mileage,</if>
+            <if test="afterRemainingMileage != null and afterRemainingMileage != ''">after_remaining_mileage,</if>
+            <if test="payType != null and payType != ''">pay_type,</if>
+            <if test="discountAmount != null and discountAmount != ''">discount_amount,</if>
+            <if test="actualPayment != null">actual_payment,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="dataScope != null">data_scope,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="oilTime != null">#{oilTime},</if>
+            <if test="amount != null and amount != ''">#{amount},</if>
+            <if test="oilLitre != null and oilLitre != ''">#{oilLitre},</if>
+            <if test="oilPrice != null and oilPrice != ''">#{oilPrice},</if>
+            <if test="carType != null and carType != ''">#{carType},</if>
+            <if test="beforeRemainingMileage != null and beforeRemainingMileage != ''">#{beforeRemainingMileage},</if>
+            <if test="afterRemainingMileage != null and afterRemainingMileage != ''">#{afterRemainingMileage},</if>
+            <if test="payType != null and payType != ''">#{payType},</if>
+            <if test="discountAmount != null and discountAmount != ''">#{discountAmount},</if>
+            <if test="actualPayment != null">#{actualPayment},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="dataScope != null">#{dataScope},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTripDriveOil" parameterType="TripDriveOil">
+        update trip_drive_oil
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="oilTime != null">oil_time = #{oilTime},</if>
+            <if test="amount != null and amount != ''">amount = #{amount},</if>
+            <if test="oilLitre != null and oilLitre != ''">oil_litre = #{oilLitre},</if>
+            <if test="oilPrice != null and oilPrice != ''">oil_price = #{oilPrice},</if>
+            <if test="carType != null and carType != ''">car_type = #{carType},</if>
+            <if test="beforeRemainingMileage != null and beforeRemainingMileage != ''">before_remaining_mileage = #{beforeRemainingMileage},</if>
+            <if test="afterRemainingMileage != null and afterRemainingMileage != ''">after_remaining_mileage = #{afterRemainingMileage},</if>
+            <if test="payType != null and payType != ''">pay_type = #{payType},</if>
+            <if test="discountAmount != null and discountAmount != ''">discount_amount = #{discountAmount},</if>
+            <if test="actualPayment != null">actual_payment = #{actualPayment},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="dataScope != null">data_scope = #{dataScope},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where oil_id = #{oilId}
+    </update>
+
+    <delete id="deleteTripDriveOilByOilId" parameterType="Long">
+        delete from trip_drive_oil where oil_id = #{oilId}
+    </delete>
+
+    <delete id="deleteTripDriveOilByOilIds" parameterType="String">
+        delete from trip_drive_oil where oil_id in 
+        <foreach item="oilId" collection="array" open="(" separator="," close=")">
+            #{oilId}
+        </foreach>
+    </delete>
+</mapper>

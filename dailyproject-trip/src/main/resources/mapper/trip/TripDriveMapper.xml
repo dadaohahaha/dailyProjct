@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dailyprojecttrip.mapper.TripDriveMapper">
+    
+    <resultMap type="TripDrive" id="TripDriveResult">
+        <result property="driveId"    column="drive_id"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="spendTime"    column="spend_time"    />
+        <result property="distance"    column="distance"    />
+        <result property="oilConsumption"    column="oil_consumption"    />
+        <result property="remainingMileage"    column="remaining_mileage"    />
+        <result property="totalMileage"    column="total_mileage"    />
+        <result property="carType"    column="car_type"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="dataScope"    column="data_scope"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTripDriveVo">
+        select drive_id, start_time, spend_time, distance, oil_consumption, remaining_mileage, total_mileage, car_type, del_flag, data_scope, create_by, create_time, update_by, update_time, remark from trip_drive
+    </sql>
+
+    <select id="selectTripDriveList" parameterType="TripDrive" resultMap="TripDriveResult">
+        <include refid="selectTripDriveVo"/>
+        <where>  
+<!--            <if test="startTime != null "> and start_time = #{startTime}</if>-->
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND start_time &gt;= #{params.beginTime}
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND start_time &lt;= #{params.endTime}
+            </if>
+            <if test="spendTime != null  and spendTime != ''"> and spend_time = #{spendTime}</if>
+            <if test="distance != null  and distance != ''"> and distance = #{distance}</if>
+            <if test="oilConsumption != null  and oilConsumption != ''"> and oil_consumption = #{oilConsumption}</if>
+            <if test="remainingMileage != null  and remainingMileage != ''"> and remaining_mileage = #{remainingMileage}</if>
+            <if test="totalMileage != null  and totalMileage != ''"> and total_mileage = #{totalMileage}</if>
+            <if test="carType != null  and carType != ''"> and car_type = #{carType}</if>
+            <if test="dataScope != null  and dataScope != ''"> and data_scope = #{dataScope}</if>
+             and del_flag = 0
+        </where>
+    </select>
+    
+    <select id="selectTripDriveByDriveId" parameterType="Long" resultMap="TripDriveResult">
+        <include refid="selectTripDriveVo"/>
+        where drive_id = #{driveId}
+    </select>
+        
+    <insert id="insertTripDrive" parameterType="TripDrive" useGeneratedKeys="true" keyProperty="driveId">
+        insert into trip_drive
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="startTime != null">start_time,</if>
+            <if test="spendTime != null and spendTime != ''">spend_time,</if>
+            <if test="distance != null and distance != ''">distance,</if>
+            <if test="oilConsumption != null and oilConsumption != ''">oil_consumption,</if>
+            <if test="remainingMileage != null and remainingMileage != ''">remaining_mileage,</if>
+            <if test="totalMileage != null and totalMileage != ''">total_mileage,</if>
+            <if test="carType != null and carType != ''">car_type,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="dataScope != null">data_scope,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="startTime != null">#{startTime},</if>
+            <if test="spendTime != null and spendTime != ''">#{spendTime},</if>
+            <if test="distance != null and distance != ''">#{distance},</if>
+            <if test="oilConsumption != null and oilConsumption != ''">#{oilConsumption},</if>
+            <if test="remainingMileage != null and remainingMileage != ''">#{remainingMileage},</if>
+            <if test="totalMileage != null and totalMileage != ''">#{totalMileage},</if>
+            <if test="carType != null and carType != ''">#{carType},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="dataScope != null">#{dataScope},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTripDrive" parameterType="TripDrive">
+        update trip_drive
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="spendTime != null and spendTime != ''">spend_time = #{spendTime},</if>
+            <if test="distance != null and distance != ''">distance = #{distance},</if>
+            <if test="oilConsumption != null and oilConsumption != ''">oil_consumption = #{oilConsumption},</if>
+            <if test="remainingMileage != null and remainingMileage != ''">remaining_mileage = #{remainingMileage},</if>
+            <if test="totalMileage != null and totalMileage != ''">total_mileage = #{totalMileage},</if>
+            <if test="carType != null and carType != ''">car_type = #{carType},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="dataScope != null">data_scope = #{dataScope},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where drive_id = #{driveId}
+    </update>
+
+    <delete id="deleteTripDriveByDriveId" parameterType="Long">
+        delete from trip_drive where drive_id = #{driveId}
+    </delete>
+
+<!--    <delete id="deleteTripDriveByDriveIds" parameterType="String">-->
+<!--        delete from trip_drive where drive_id in -->
+<!--        <foreach item="driveId" collection="array" open="(" separator="," close=")">-->
+<!--            #{driveId}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+    <update id="deleteTripDriveByDriveIds" parameterType="String">
+        update trip_drive set del_flag = 2 where drive_id in
+        <foreach item="driveId" collection="array" open="(" separator="," close=")">
+            #{driveId}
+        </foreach>
+    </update>
+</mapper>
