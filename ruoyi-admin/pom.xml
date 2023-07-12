@@ -66,6 +66,10 @@
             <groupId>com.example</groupId>
             <artifactId>dailyproject-trip</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>dailyproject-shop</artifactId>
+        </dependency>
 
     </dependencies>
 

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dailyprojectshop.mapper.ShopProductInventoryMapper">
+    
+    <resultMap type="ShopProductInventory" id="ShopProductInventoryResult">
+        <result property="id"    column="id"    />
+        <result property="productCategory"    column="product_category"    />
+        <result property="productBrand"    column="product_brand"    />
+        <result property="productName"    column="product_name"    />
+        <result property="capacity"    column="capacity"    />
+        <result property="capacityUnit"    column="capacity_unit"    />
+        <result property="number"    column="number"    />
+        <result property="numUnit"    column="num_unit"    />
+        <result property="manufacturingDate"    column="manufacturing_date"    />
+        <result property="expirationDate"    column="expiration_date"    />
+        <result property="qualityGuaranteePeriod"    column="quality_guarantee_period"    />
+        <result property="buyDate"    column="buy_date"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+        <result property="dataScope"    column="data_scope"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopProductInventoryVo">
+        select id, product_category, product_brand, product_name, capacity, capacity_unit, number, num_unit, manufacturing_date, expiration_date, quality_guarantee_period, buy_date, del_flag, status, data_scope, create_by, create_time, update_by, update_time, remark from shop_product_inventory
+    </sql>
+
+    <select id="selectShopProductInventoryList" parameterType="ShopProductInventory" resultMap="ShopProductInventoryResult">
+        <include refid="selectShopProductInventoryVo"/>
+        <where>  
+            <if test="productCategory != null  and productCategory != ''"> and product_category = #{productCategory}</if>
+            <if test="productBrand != null  and productBrand != ''"> and product_brand = #{productBrand}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="capacity != null  and capacity != ''"> and capacity = #{capacity}</if>
+            <if test="capacityUnit != null  and capacityUnit != ''"> and capacity_unit = #{capacityUnit}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="numUnit != null  and numUnit != ''"> and num_unit = #{numUnit}</if>
+            <if test="manufacturingDate != null "> and manufacturing_date = #{manufacturingDate}</if>
+            <if test="expirationDate != null "> and expiration_date = #{expirationDate}</if>
+            <if test="qualityGuaranteePeriod != null  and qualityGuaranteePeriod != ''"> and quality_guarantee_period = #{qualityGuaranteePeriod}</if>
+            <if test="buyDate != null "> and buy_date = #{buyDate}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="dataScope != null  and dataScope != ''"> and data_scope = #{dataScope}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopProductInventoryById" parameterType="Long" resultMap="ShopProductInventoryResult">
+        <include refid="selectShopProductInventoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertShopProductInventory" parameterType="ShopProductInventory">
+        insert into shop_product_inventory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="productCategory != null">product_category,</if>
+            <if test="productBrand != null">product_brand,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="capacity != null">capacity,</if>
+            <if test="capacityUnit != null">capacity_unit,</if>
+            <if test="number != null">number,</if>
+            <if test="numUnit != null">num_unit,</if>
+            <if test="manufacturingDate != null">manufacturing_date,</if>
+            <if test="expirationDate != null">expiration_date,</if>
+            <if test="qualityGuaranteePeriod != null">quality_guarantee_period,</if>
+            <if test="buyDate != null">buy_date,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="dataScope != null">data_scope,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="productCategory != null">#{productCategory},</if>
+            <if test="productBrand != null">#{productBrand},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="capacity != null">#{capacity},</if>
+            <if test="capacityUnit != null">#{capacityUnit},</if>
+            <if test="number != null">#{number},</if>
+            <if test="numUnit != null">#{numUnit},</if>
+            <if test="manufacturingDate != null">#{manufacturingDate},</if>
+            <if test="expirationDate != null">#{expirationDate},</if>
+            <if test="qualityGuaranteePeriod != null">#{qualityGuaranteePeriod},</if>
+            <if test="buyDate != null">#{buyDate},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="dataScope != null">#{dataScope},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopProductInventory" parameterType="ShopProductInventory">
+        update shop_product_inventory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productCategory != null">product_category = #{productCategory},</if>
+            <if test="productBrand != null">product_brand = #{productBrand},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="capacity != null">capacity = #{capacity},</if>
+            <if test="capacityUnit != null">capacity_unit = #{capacityUnit},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="numUnit != null">num_unit = #{numUnit},</if>
+            <if test="manufacturingDate != null">manufacturing_date = #{manufacturingDate},</if>
+            <if test="expirationDate != null">expiration_date = #{expirationDate},</if>
+            <if test="qualityGuaranteePeriod != null">quality_guarantee_period = #{qualityGuaranteePeriod},</if>
+            <if test="buyDate != null">buy_date = #{buyDate},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="dataScope != null">data_scope = #{dataScope},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteShopProductInventoryById" parameterType="Long">
+        delete from shop_product_inventory where id = #{id}
+    </delete>
+
+    <delete id="deleteShopProductInventoryByIds" parameterType="String">
+        delete from shop_product_inventory where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

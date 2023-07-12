@@ -57,13 +57,25 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item label="实付金额" prop="actualPayment">
-        <el-input
-          v-model="queryParams.actualPayment"
-          placeholder="请输入实付金额"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="型号" prop="carType">
+        <el-select v-model="queryParams.carType" placeholder="型号" clearable>
+          <el-option
+            v-for="dict in dict.type.car_type"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="开票状态" prop="invoiceStatus">
+        <el-select v-model="queryParams.invoiceStatus" placeholder="开票状态" clearable>
+          <el-option
+            v-for="dict in dict.type.invoice_status"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
 <!--      <el-form-item label="数据范围" prop="dataScope">-->
 <!--        <el-input-->
@@ -135,15 +147,31 @@
       </el-table-column>
       <el-table-column label="金额/元" align="center" prop="amount" />
       <el-table-column label="油量/升L" align="center" prop="oilLitre" />
+      <el-table-column label="油类型" align="center" prop="oilType" >
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.oil_type" :value="scope.row.oilType"/>
+        </template>
+      </el-table-column>
       <el-table-column label="单价" align="center" prop="oilPrice" />
-      <el-table-column label="型号" align="center" prop="carType" />
-      <el-table-column label="加前剩余里程" align="center" prop="beforeRemainingMileage" width="100" />
-      <el-table-column label="加后剩余里程" align="center" prop="afterRemainingMileage" width="100" />
+<!--      <el-table-column label="型号" align="center" prop="carType" />-->
+      <el-table-column label="型号" align="center" prop="carType" width="135" >
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.car_type" :value="scope.row.carType"/>
+        </template>
+      </el-table-column>
+<!--      <el-table-column label="加前剩余里程" align="center" prop="beforeRemainingMileage" width="100" />-->
+<!--      <el-table-column label="加后剩余里程" align="center" prop="afterRemainingMileage" width="100" />-->
       <el-table-column label="付款方式" align="center" prop="payType" />
+<!--      <el-table-column label="开票状态" align="center" prop="invoiceStatus" />-->
+      <el-table-column label="开票状态" align="center" prop="invoiceStatus" >
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.invoice_status" :value="scope.row.invoiceStatus"/>
+        </template>
+      </el-table-column>
 <!--      <el-table-column label="优惠金额" align="center" prop="discountAmount" />-->
 <!--      <el-table-column label="实付金额" align="center" prop="actualPayment" />-->
 <!--      <el-table-column label="数据范围" align="center" prop="dataScope" />-->
-      <el-table-column label="备注" align="center" prop="remark" />
+<!--      <el-table-column label="备注" align="center" prop="remark" />-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -174,7 +202,7 @@
 
     <!-- 添加或修改行驶加油信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="加油日期" prop="oilTime">
           <el-date-picker clearable
             v-model="form.oilTime"
@@ -183,15 +211,37 @@
             placeholder="请选择加油日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="金额/元" prop="amount">
-          <el-input v-model="form.amount" placeholder="请输入金额/元" />
-        </el-form-item>
-        <el-form-item label="油量/升L" prop="oilLitre">
-          <el-input v-model="form.oilLitre" placeholder="请输入油量/升L" />
-        </el-form-item>
-        <el-form-item label="单价" prop="oilPrice">
-          <el-input v-model="form.oilPrice" placeholder="请输入单价" />
-        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="金额/元" prop="amount">
+              <el-input v-model="form.amount" placeholder="请输入金额/元" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="油量/升L" prop="oilLitre">
+              <el-input v-model="form.oilLitre" placeholder="请输入油量/升L" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="单价" prop="oilPrice">
+              <el-input v-model="form.oilPrice" placeholder="请输入单价" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="油类型" prop="oilType" >
+              <el-select v-model="form.oilType" placeholder="请选择型号">
+                <el-option
+                  v-for="dict in dict.type.oil_type"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="型号" prop="carType">
           <el-select v-model="form.carType" placeholder="请选择型号">
             <el-option
@@ -202,21 +252,39 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="加前剩余里程" prop="beforeRemainingMileage">
-          <el-input v-model="form.beforeRemainingMileage" placeholder="请输入加前剩余里程" />
-        </el-form-item>
-        <el-form-item label="加后剩余里程" prop="afterRemainingMileage">
-          <el-input v-model="form.afterRemainingMileage" placeholder="请输入加后剩余里程" />
-        </el-form-item>
-        <el-form-item label="优惠金额" prop="discountAmount">
-          <el-input v-model="form.discountAmount" placeholder="请输入优惠金额" />
-        </el-form-item>
-        <el-form-item label="实付金额" prop="actualPayment">
-          <el-input v-model="form.actualPayment" placeholder="请输入实付金额" />
-        </el-form-item>
         <el-form-item label="付款方式" prop="payType">
           <el-input v-model="form.payType" placeholder="请输入付款方式" />
         </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="加前剩余里程" prop="beforeRemainingMileage">
+              <el-input v-model="form.beforeRemainingMileage" placeholder="请输入加前剩余里程" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="加后剩余里程" prop="afterRemainingMileage">
+              <el-input v-model="form.afterRemainingMileage" placeholder="请输入加后剩余里程" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="优惠金额" prop="discountAmount">
+              <el-input v-model="form.discountAmount" placeholder="请输入优惠金额" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="实付金额" prop="actualPayment">
+              <el-input v-model="form.actualPayment" placeholder="请输入实付金额" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+          </el-col>
+          <el-col :span="12">
+          </el-col>
+        </el-row>
 <!--        <el-form-item label="删除标志" prop="delFlag">-->
 <!--          <el-input v-model="form.delFlag" placeholder="请输入删除标志" />-->
 <!--        </el-form-item>-->
@@ -240,7 +308,7 @@ import { listOil, getOil, delOil, addOil, updateOil } from "@/api/trip/oil";
 
 export default {
   name: "Oil",
-  dicts: ['car_type'],
+  dicts: ['car_type','invoice_status','oil_type'],
   data() {
     return {
       // 遮罩层
@@ -283,6 +351,9 @@ actualPayment: null,
       form: {},
       // 表单校验
       rules: {
+        oilTime: [
+          { required: true, message: "加油日期不能为空", trigger: "change" }
+        ],
         amount: [
           { required: true, message: "金额/元不能为空", trigger: "blur" }
         ],
@@ -292,21 +363,24 @@ actualPayment: null,
         oilPrice: [
           { required: true, message: "单价不能为空", trigger: "blur" }
         ],
+        oilType: [
+          { required: true, message: "油类型不能为空", trigger: "change" }
+        ],
         carType: [
           { required: true, message: "型号不能为空", trigger: "change" }
         ],
-        beforeRemainingMileage: [
-          { required: true, message: "加前剩余里程不能为空", trigger: "blur" }
-        ],
-        afterRemainingMileage: [
-          { required: true, message: "加后剩余里程不能为空", trigger: "blur" }
-        ],
+        // beforeRemainingMileage: [
+        //   { required: true, message: "加前剩余里程不能为空", trigger: "blur" }
+        // ],
+        // afterRemainingMileage: [
+        //   { required: true, message: "加后剩余里程不能为空", trigger: "blur" }
+        // ],
         payType: [
           { required: true, message: "付款方式不能为空", trigger: "change" }
         ],
-        discountAmount: [
-          { required: true, message: "优惠金额不能为空", trigger: "blur" }
-        ],
+        // discountAmount: [
+        //   { required: true, message: "优惠金额不能为空", trigger: "blur" }
+        // ],
       }
     };
   },

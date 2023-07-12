@@ -176,6 +176,11 @@
                 <artifactId>dailyproject-trip</artifactId>
                 <version>0.0.1</version>
             </dependency>
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>dailyproject-shop</artifactId>
+                <version>0.0.1</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -188,6 +193,7 @@
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
         <module>dailyproject-trip</module>
+        <module>dailyproject-shop</module>
     </modules>
     <packaging>pom</packaging>
 

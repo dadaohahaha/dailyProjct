@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dailyprojectshop.mapper.ShopProductInfoMapper">
+    
+    <resultMap type="ShopProductInfo" id="ShopProductInfoResult">
+        <result property="id"    column="id"    />
+        <result property="productCategory"    column="product_category"    />
+        <result property="productBrand"    column="product_brand"    />
+        <result property="productName"    column="product_name"    />
+        <result property="activityTime"    column="activity_time"    />
+        <result property="pic"    column="pic"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="dataScope"    column="data_scope"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectShopProductInfoVo">
+        select id, product_category, product_brand, product_name, activity_time, pic, del_flag, data_scope, create_by, create_time, update_by, update_time, remark from shop_product_info
+    </sql>
+
+    <select id="selectShopProductInfoList" parameterType="ShopProductInfo" resultMap="ShopProductInfoResult">
+        <include refid="selectShopProductInfoVo"/>
+        <where>  
+            <if test="productCategory != null  and productCategory != ''"> and product_category = #{productCategory}</if>
+            <if test="productBrand != null  and productBrand != ''"> and product_brand = #{productBrand}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="activityTime != null  and activityTime != ''"> and activity_time = #{activityTime}</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+            <if test="dataScope != null  and dataScope != ''"> and data_scope = #{dataScope}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopProductInfoById" parameterType="Long" resultMap="ShopProductInfoResult">
+        <include refid="selectShopProductInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertShopProductInfo" parameterType="ShopProductInfo">
+        insert into shop_product_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="productCategory != null">product_category,</if>
+            <if test="productBrand != null">product_brand,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="activityTime != null">activity_time,</if>
+            <if test="pic != null">pic,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="dataScope != null">data_scope,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="productCategory != null">#{productCategory},</if>
+            <if test="productBrand != null">#{productBrand},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="activityTime != null">#{activityTime},</if>
+            <if test="pic != null">#{pic},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="dataScope != null">#{dataScope},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopProductInfo" parameterType="ShopProductInfo">
+        update shop_product_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productCategory != null">product_category = #{productCategory},</if>
+            <if test="productBrand != null">product_brand = #{productBrand},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="activityTime != null">activity_time = #{activityTime},</if>
+            <if test="pic != null">pic = #{pic},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="dataScope != null">data_scope = #{dataScope},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteShopProductInfoById" parameterType="Long">
+        delete from shop_product_info where id = #{id}
+    </delete>
+
+    <delete id="deleteShopProductInfoByIds" parameterType="String">
+        delete from shop_product_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

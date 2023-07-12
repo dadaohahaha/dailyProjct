@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 行驶加油信息对象 trip_drive_oil
  * 
  * @author bxm
- * @date 2023-05-01
+ * @date 2023-05-02
  */
 public class TripDriveOil extends BaseEntity
 {
@@ -32,6 +32,10 @@ public class TripDriveOil extends BaseEntity
     /** 油量/升L */
     @Excel(name = "油量/升L")
     private String oilLitre;
+
+    /** 油类型 */
+    @Excel(name = "油类型")
+    private String oilType;
 
     /** 单价（元/升L） */
     @Excel(name = "单价", readConverterExp = "元=/升L")
@@ -61,6 +65,10 @@ public class TripDriveOil extends BaseEntity
     @Excel(name = "实付金额")
     private String actualPayment;
 
+    /** 开票状态（0未开票 */
+    @Excel(name = "开票状态", readConverterExp = "开票状态（0未开票")
+    private String invoiceStatus;
+
     /** 删除标志（0代表存在 */
     private String delFlag;
 
@@ -68,84 +76,93 @@ public class TripDriveOil extends BaseEntity
     @Excel(name = "数据范围", readConverterExp = "数据范围（1：全部数据权限")
     private String dataScope;
 
-    public void setOilId(Long oilId) 
+    public void setOilId(Long oilId)
     {
         this.oilId = oilId;
     }
 
-    public Long getOilId() 
+    public Long getOilId()
     {
         return oilId;
     }
-    public void setOilTime(Date oilTime) 
+    public void setOilTime(Date oilTime)
     {
         this.oilTime = oilTime;
     }
 
-    public Date getOilTime() 
+    public Date getOilTime()
     {
         return oilTime;
     }
-    public void setAmount(String amount) 
+    public void setAmount(String amount)
     {
         this.amount = amount;
     }
 
-    public String getAmount() 
+    public String getAmount()
     {
         return amount;
     }
-    public void setOilLitre(String oilLitre) 
+    public void setOilLitre(String oilLitre)
     {
         this.oilLitre = oilLitre;
     }
 
-    public String getOilLitre() 
+    public String getOilLitre()
     {
         return oilLitre;
     }
-    public void setOilPrice(String oilPrice) 
+    public void setOilType(String oilType)
+    {
+        this.oilType = oilType;
+    }
+
+    public String getOilType()
+    {
+        return oilType;
+    }
+    public void setOilPrice(String oilPrice)
     {
         this.oilPrice = oilPrice;
     }
 
-    public String getOilPrice() 
+    public String getOilPrice()
     {
         return oilPrice;
     }
-    public void setCarType(String carType) 
+    public void setCarType(String carType)
     {
         this.carType = carType;
     }
 
-    public String getCarType() 
+    public String getCarType()
     {
         return carType;
     }
-    public void setBeforeRemainingMileage(String beforeRemainingMileage) 
+    public void setBeforeRemainingMileage(String beforeRemainingMileage)
     {
         this.beforeRemainingMileage = beforeRemainingMileage;
     }
 
-    public String getBeforeRemainingMileage() 
+    public String getBeforeRemainingMileage()
     {
         return beforeRemainingMileage;
     }
-    public void setAfterRemainingMileage(String afterRemainingMileage) 
+    public void setAfterRemainingMileage(String afterRemainingMileage)
     {
         this.afterRemainingMileage = afterRemainingMileage;
     }
 
-    public String getAfterRemainingMileage() 
+    public String getAfterRemainingMileage()
     {
         return afterRemainingMileage;
     }
-    public void setPayType(String payType) 
+    public void setPayType(String payType)
     {
         this.payType = payType;
     }
 
-    public String getPayType() 
+    public String getPayType()
     {
         return payType;
     }
@@ -167,21 +184,30 @@ public class TripDriveOil extends BaseEntity
     {
         return actualPayment;
     }
-    public void setDelFlag(String delFlag) 
+    public void setInvoiceStatus(String invoiceStatus)
+    {
+        this.invoiceStatus = invoiceStatus;
+    }
+
+    public String getInvoiceStatus()
+    {
+        return invoiceStatus;
+    }
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }
 
-    public String getDelFlag() 
+    public String getDelFlag()
     {
         return delFlag;
     }
-    public void setDataScope(String dataScope) 
+    public void setDataScope(String dataScope)
     {
         this.dataScope = dataScope;
     }
 
-    public String getDataScope() 
+    public String getDataScope()
     {
         return dataScope;
     }
@@ -189,24 +215,26 @@ public class TripDriveOil extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("oilId", getOilId())
-            .append("oilTime", getOilTime())
-            .append("amount", getAmount())
-            .append("oilLitre", getOilLitre())
-            .append("oilPrice", getOilPrice())
-            .append("carType", getCarType())
-            .append("beforeRemainingMileage", getBeforeRemainingMileage())
-            .append("afterRemainingMileage", getAfterRemainingMileage())
-            .append("payType", getPayType())
-            .append("discountAmount", getDiscountAmount())
-            .append("actualPayment", getActualPayment())
-            .append("delFlag", getDelFlag())
-            .append("dataScope", getDataScope())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
-            .append("remark", getRemark())
-            .toString();
+                .append("oilId", getOilId())
+                .append("oilTime", getOilTime())
+                .append("amount", getAmount())
+                .append("oilLitre", getOilLitre())
+                .append("oilType", getOilType())
+                .append("oilPrice", getOilPrice())
+                .append("carType", getCarType())
+                .append("beforeRemainingMileage", getBeforeRemainingMileage())
+                .append("afterRemainingMileage", getAfterRemainingMileage())
+                .append("payType", getPayType())
+                .append("discountAmount", getDiscountAmount())
+                .append("actualPayment", getActualPayment())
+                .append("invoiceStatus", getInvoiceStatus())
+                .append("delFlag", getDelFlag())
+                .append("dataScope", getDataScope())
+                .append("createBy", getCreateBy())
+                .append("createTime", getCreateTime())
+                .append("updateBy", getUpdateBy())
+                .append("updateTime", getUpdateTime())
+                .append("remark", getRemark())
+                .toString();
     }
 }
